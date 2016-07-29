@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BallPulseDrawable extends DefaultLoadingDrawable {
-    private static final float SCALE = 1.0f;
-    //scale x ,y
-    private float[] scaleFloats = new float[]{SCALE,
-            SCALE,
-            SCALE};
+    private float[] scaleFloats = new float[]{SCALE, SCALE, SCALE};
 
     @Override
     public void draw(Canvas canvas){

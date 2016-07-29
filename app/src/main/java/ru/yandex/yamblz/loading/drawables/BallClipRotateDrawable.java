@@ -9,11 +9,11 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OneArcDrawable extends DefaultLoadingDrawable{
+public class BallClipRotateDrawable extends DefaultLoadingDrawable{
     private float rotation;
     private float scale;
 
-    public OneArcDrawable() {
+    public BallClipRotateDrawable() {
         super();
         defaultPaint.setStyle(Paint.Style.STROKE);
     }

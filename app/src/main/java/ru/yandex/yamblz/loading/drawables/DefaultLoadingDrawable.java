@@ -16,6 +16,9 @@ import android.os.SystemClock;
 import java.util.List;
 
 public abstract class DefaultLoadingDrawable extends Drawable implements Runnable{
+    public static final float SCALE=1;
+    public static final int ALPHA=255;
+
     Paint defaultPaint =new Paint();
     RectF tempRectF;
     private Handler handler;
@@ -80,4 +83,14 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     }
 
     abstract List<Animator> createAnimators();
+
+    @Override
+    public int getIntrinsicWidth() {
+        return 1;
+    }
+
+    @Override
+    public int getIntrinsicHeight() {
+        return 1;
+    }
 }

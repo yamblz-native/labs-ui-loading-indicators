@@ -9,13 +9,13 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TwoArcBallDrawable extends DefaultLoadingDrawable {
+public class BallClipRotatePulseDrawable extends DefaultLoadingDrawable {
 
     private float scale1;
     private float scale2;
     private float rotation;
 
-    public TwoArcBallDrawable() {
+    public BallClipRotatePulseDrawable() {
         super();
     }
 
