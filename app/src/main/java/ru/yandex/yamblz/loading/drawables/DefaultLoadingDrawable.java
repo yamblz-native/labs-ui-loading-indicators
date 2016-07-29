@@ -21,17 +21,17 @@ public class DefaultLoadingDrawable extends Drawable implements Runnable{
     public DefaultLoadingDrawable(){
         defaultPaint=new Paint();
         defaultPaint.setColor(Color.BLACK);
+        defaultPaint.setStrokeWidth(6);
+        defaultPaint.setAntiAlias(true);
         tempRectF=new RectF();
         handler=new Handler(Looper.getMainLooper());
         lastFrame= SystemClock.uptimeMillis();
     }
     @Override
     public void draw(Canvas canvas) {
-        canvas.save();
-        //рисуем в оазмерах 1 к 1
+        //рисуем в оазмерах 100 к 100
         //начало координат левый нижний угол
-        canvas.translate(0,canvas.getHeight());
-        canvas.scale(canvas.getWidth()/100,-canvas.getHeight()/100);
+        canvas.scale(canvas.getWidth()/100f,canvas.getHeight()/100f);
         nextFrame();
     }
 
