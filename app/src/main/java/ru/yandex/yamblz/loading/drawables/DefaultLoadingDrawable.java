@@ -1,6 +1,7 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
+import android.animation.Animator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -12,13 +13,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 
-public class DefaultLoadingDrawable extends Drawable implements Runnable{
-    protected Paint defaultPaint =new Paint();
-    protected RectF tempRectF;
-    protected Handler handler;
-    protected long lastFrame;
+import java.util.List;
 
-    public DefaultLoadingDrawable(){
+public abstract class DefaultLoadingDrawable extends Drawable implements Runnable{
+    Paint defaultPaint =new Paint();
+    RectF tempRectF;
+    private Handler handler;
+    private long lastFrame;
+    private List<Animator> animators;
+    DefaultLoadingDrawable(){
         defaultPaint=new Paint();
         defaultPaint.setColor(Color.BLACK);
         defaultPaint.setStrokeWidth(6);
@@ -26,6 +29,8 @@ public class DefaultLoadingDrawable extends Drawable implements Runnable{
         tempRectF=new RectF();
         handler=new Handler(Looper.getMainLooper());
         lastFrame= SystemClock.uptimeMillis();
+        animators=createAnimators();
+        startAnimators();
     }
     @Override
     public void draw(Canvas canvas) {
@@ -34,7 +39,7 @@ public class DefaultLoadingDrawable extends Drawable implements Runnable{
         nextFrame();
     }
 
-    protected void nextFrame(){
+    private void nextFrame(){
         handler.post(this);
     }
 
@@ -62,9 +67,17 @@ public class DefaultLoadingDrawable extends Drawable implements Runnable{
        // Log.d("DefaultLoadingDrawable","delta:"+delta);
     }
 
+    private void startAnimators(){
+        for(Animator a:animators){
+            a.start();
+        }
+    }
+
     protected void update(long delta){
         //работает только если установлен коллбек, вьюхи его ставят сами
         //каждый кадр просим перерисовать себя=)
         invalidateSelf();
     }
+
+    abstract List<Animator> createAnimators();
 }

@@ -1,33 +1,26 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-public class OneArcDrawable extends DefaultLoadingDrawable{
-    private final ValueAnimator rotateAnimator;
-    private final ValueAnimator scaleAnimator;
+import java.util.ArrayList;
+import java.util.List;
 
+public class OneArcDrawable extends DefaultLoadingDrawable{
+    private float rotation;
+    private float scale;
 
     public OneArcDrawable() {
         super();
         defaultPaint.setStyle(Paint.Style.STROKE);
-        rotateAnimator =ValueAnimator.ofFloat(0,360);
-        rotateAnimator.setDuration(750);
-        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        rotateAnimator.start();
-        scaleAnimator=ValueAnimator.ofFloat(1,0.6f,0.5f,1);
-        scaleAnimator.setDuration(750);
-        scaleAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        scaleAnimator.start();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        float rotation=(Float) rotateAnimator.getAnimatedValue();
-        float scale=(Float) scaleAnimator.getAnimatedValue();
         canvas.translate(50,50);
         canvas.scale(scale,scale);
         canvas.rotate(rotation);
@@ -39,6 +32,27 @@ public class OneArcDrawable extends DefaultLoadingDrawable{
     @Override
     protected void update(long delta) {
         super.update(delta);
+    }
+
+    @Override
+    List<Animator> createAnimators() {
+        List<Animator> animators=new ArrayList<>();
+        ValueAnimator rotateAnimator =ValueAnimator.ofFloat(0,360);
+        rotateAnimator.setDuration(750);
+        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        rotateAnimator.addUpdateListener(animation -> {
+          rotation= (float) animation.getAnimatedValue();
+        });
+        animators.add(rotateAnimator);
+
+        ValueAnimator scaleAnimator=ValueAnimator.ofFloat(1,0.6f,0.5f,1);
+        scaleAnimator.setDuration(750);
+        scaleAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        scaleAnimator.addUpdateListener(animation -> {
+            scale= (float) animation.getAnimatedValue();
+        });
+        animators.add(scaleAnimator);
+        return animators;
     }
 
 }

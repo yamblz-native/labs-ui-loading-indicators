@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.yandex.yamblz.R;
-import ru.yandex.yamblz.loading.drawables.OneArcDrawable;
+import ru.yandex.yamblz.loading.drawables.TwoArcBallDrawable;
 
 public class ContentFragment extends BaseFragment {
     @NonNull
@@ -23,7 +23,7 @@ public class ContentFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
        // ProgressDialog progressDialog=ProgressDialog.show(getContext(),null,null);
         ProgressDialog progressDialog1=new ProgressDialog(getContext());
-        progressDialog1.setIndeterminateDrawable(new OneArcDrawable());
+        progressDialog1.setIndeterminateDrawable(new TwoArcBallDrawable());
         progressDialog1.show();
 
     }
