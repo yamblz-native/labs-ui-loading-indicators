@@ -30,7 +30,6 @@ public class DefaultLoadingDrawable extends Drawable implements Runnable{
     @Override
     public void draw(Canvas canvas) {
         //рисуем в оазмерах 100 к 100
-        //начало координат левый нижний угол
         canvas.scale(canvas.getWidth()/100f,canvas.getHeight()/100f);
         nextFrame();
     }

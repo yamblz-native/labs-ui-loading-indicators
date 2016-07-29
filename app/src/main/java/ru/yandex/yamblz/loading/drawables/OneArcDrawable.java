@@ -4,32 +4,36 @@ package ru.yandex.yamblz.loading.drawables;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class OneArcDrawable extends DefaultLoadingDrawable{
-    private final ValueAnimator valueAnimator;
+    private final ValueAnimator rotateAnimator;
+    private final ValueAnimator scaleAnimator;
+
 
     public OneArcDrawable() {
         super();
-        defaultPaint.setAntiAlias(true);
-        defaultPaint.setStrokeWidth(10f);
         defaultPaint.setStyle(Paint.Style.STROKE);
-        valueAnimator=ValueAnimator.ofFloat(0,1);
-        valueAnimator.setDuration(1000);
-        valueAnimator.setRepeatMode(ValueAnimator.RESTART);
-        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        valueAnimator.start();
+        rotateAnimator =ValueAnimator.ofFloat(0,360);
+        rotateAnimator.setDuration(750);
+        rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        rotateAnimator.start();
+        scaleAnimator=ValueAnimator.ofFloat(1,0.6f,0.5f,1);
+        scaleAnimator.setDuration(750);
+        scaleAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        scaleAnimator.start();
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        tempRectF.set(0,0,100,100);
-       // canvas.drawOval(tempRectF,defaultPaint);
-        float startAngle=310*(Float)valueAnimator.getAnimatedValue();
-        Log.d("Dsad",""+startAngle);
-        canvas.drawArc(tempRectF,startAngle,310,false,defaultPaint);
-        canvas.restore();
+        float rotation=(Float) rotateAnimator.getAnimatedValue();
+        float scale=(Float) scaleAnimator.getAnimatedValue();
+        canvas.translate(50,50);
+        canvas.scale(scale,scale);
+        canvas.rotate(rotation);
+        float circleSpace=10;
+        tempRectF.set(-50+circleSpace,-50+circleSpace,50-circleSpace,50-circleSpace);
+        canvas.drawArc(tempRectF,-45,270,false,defaultPaint);
     }
 
     @Override
