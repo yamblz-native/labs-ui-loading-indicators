@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import ru.yandex.yamblz.R;
-import ru.yandex.yamblz.loading.drawables.BallRotateDrawable;
+import ru.yandex.yamblz.loading.drawables.BallScaleMiltipleDrawable;
 
 public class ContentFragment extends BaseFragment {
     @NonNull
@@ -42,7 +42,7 @@ public class ContentFragment extends BaseFragment {
 
        // ProgressDialog progressDialog=ProgressDialog.show(getContext(),null,null);
         ProgressDialog progressDialog1=new ProgressDialog(getContext());
-        progressDialog1.setIndeterminateDrawable(new BallRotateDrawable());
+        progressDialog1.setIndeterminateDrawable(new BallScaleMiltipleDrawable());
         progressDialog1.show();
 
     }
