@@ -42,17 +42,13 @@ public class BallRotateDrawable extends DefaultLoadingDrawable {
         List<Animator> animators=new ArrayList<>();
         ValueAnimator scaleAnim=ValueAnimator.ofFloat(0.5f,1,0.5f);
         scaleAnim.setDuration(1000);
-        scaleAnim.setRepeatCount(-1);
-        scaleAnim.addUpdateListener(animation -> {
-            scale = (float) animation.getAnimatedValue();
-        });
+        scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
+        scaleAnim.addUpdateListener(animation -> scale = (float) animation.getAnimatedValue());
 
         ValueAnimator rotateAnim=ValueAnimator.ofFloat(0,180,360);
-        rotateAnim.addUpdateListener(animation -> {
-            rotation= (float) animation.getAnimatedValue();
-        });
+        rotateAnim.addUpdateListener(animation -> rotation= (float) animation.getAnimatedValue());
         rotateAnim.setDuration(1000);
-        rotateAnim.setRepeatCount(-1);
+        rotateAnim.setRepeatCount(ValueAnimator.INFINITE);
 
         animators.add(scaleAnim);
         animators.add(rotateAnim);

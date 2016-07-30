@@ -10,18 +10,18 @@ import java.util.List;
 
 public class BallBeatDrawable extends DefaultLoadingDrawable {
     private float[] scaleFloats;
-    int[] alphas;
+    private int[] alphas;
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        float circleSpacing=4;
-        float radius=(100-circleSpacing*2)/6;
-        float x = 100f/ 2-(radius*2+circleSpacing);
-        float y=100f / 2;
+        float circleSpacing = 4f;
+        float radius = (100f - circleSpacing * 2f) / 6f;
+        float x = 100f / 2 - (radius * 2 + circleSpacing);
+        float y = 50f;
         for (int i = 0; i < 3; i++) {
             canvas.save();
-            float translateX=x+(radius*2)*i+circleSpacing*i;
+            float translateX = x + (radius * 2) * i + circleSpacing * i;
             canvas.translate(translateX, y);
             canvas.scale(scaleFloats[i], scaleFloats[i]);
             defaultPaint.setAlpha(alphas[i]);
@@ -34,24 +34,22 @@ public class BallBeatDrawable extends DefaultLoadingDrawable {
     List<Animator> createAnimators() {
         scaleFloats = new float[]{1f, 1f, 1f};
         alphas = new int[]{255, 255, 255};
-
-        List<Animator> animators=new ArrayList<>();
-        int[] delays=new int[]{350,0,350};
+        List<Animator> animators = new ArrayList<>();
+        int[] delays = new int[]{350, 0, 350};
         for (int i = 0; i < 3; i++) {
-            final int index=i;
-            ValueAnimator scaleAnim=ValueAnimator.ofFloat(1,0.75f,1);
+            final int index = i;
+            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.75f, 1);
             scaleAnim.setDuration(700);
-            scaleAnim.setRepeatCount(-1);
+            scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
             scaleAnim.addUpdateListener(animation -> scaleFloats[index] = (float) animation.getAnimatedValue());
 
-            ValueAnimator alphaAnim=ValueAnimator.ofInt(255,51,255);
+            ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 51, 255);
             alphaAnim.setDuration(700);
-            alphaAnim.setRepeatCount(-1);
+            alphaAnim.setRepeatCount(ValueAnimator.INFINITE);
             alphaAnim.setStartDelay(delays[i]);
-            alphaAnim.addUpdateListener(animation -> {
-                alphas[index] = (int) animation.getAnimatedValue();
-            });
+            alphaAnim.addUpdateListener(animation -> alphas[index] = (int) animation.getAnimatedValue());
+
             animators.add(scaleAnim);
             animators.add(alphaAnim);
         }

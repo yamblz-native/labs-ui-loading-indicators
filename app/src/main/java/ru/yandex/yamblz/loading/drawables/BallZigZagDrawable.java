@@ -44,14 +44,14 @@ public class BallZigZagDrawable extends DefaultLoadingDrawable {
 
             translateXAnim.setDuration(1000);
             translateXAnim.setInterpolator(new LinearInterpolator());
-            translateXAnim.setRepeatCount(-1);
+            translateXAnim.setRepeatCount(ValueAnimator.INFINITE);
             translateXAnim.addUpdateListener(animation -> {
                 translateX[index] = (float) animation.getAnimatedValue();
             });
 
             translateYAnim.setDuration(1000);
             translateYAnim.setInterpolator(new LinearInterpolator());
-            translateYAnim.setRepeatCount(-1);
+            translateYAnim.setRepeatCount(ValueAnimator.INFINITE);
             translateYAnim.addUpdateListener(animation -> {
                 translateY[index] = (float) animation.getAnimatedValue();
             });

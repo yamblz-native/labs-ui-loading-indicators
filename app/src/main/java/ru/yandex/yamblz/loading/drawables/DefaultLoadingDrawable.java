@@ -16,14 +16,12 @@ import android.os.SystemClock;
 import java.util.List;
 
 public abstract class DefaultLoadingDrawable extends Drawable implements Runnable{
-    public static final float SCALE=1;
-    public static final int ALPHA=255;
-
-    Paint defaultPaint =new Paint();
-    RectF tempRectF;
+    protected Paint defaultPaint;
+    protected RectF tempRectF;
     private Handler handler;
     private long lastFrame;
     private List<Animator> animators;
+    private boolean drawDebug=true;
     DefaultLoadingDrawable(){
         defaultPaint=new Paint();
         defaultPaint.setColor(Color.BLACK);
@@ -39,7 +37,24 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     public void draw(Canvas canvas) {
         //рисуем в оазмерах 100 к 100
         canvas.scale(canvas.getWidth()/100f,canvas.getHeight()/100f);
+        if(drawDebug)drawDebug(canvas);
         nextFrame();
+    }
+
+    private void drawDebug(Canvas canvas){
+        if(drawDebug){
+            int paintColor=defaultPaint.getColor();
+            Paint.Style style=defaultPaint.getStyle();
+            defaultPaint.setStyle(Paint.Style.FILL);
+            tempRectF.set(0,0,100,100);
+            defaultPaint.setColor(Color.BLUE);
+            canvas.drawRect(tempRectF,defaultPaint);
+            defaultPaint.setColor(Color.RED);
+            canvas.drawLine(0,50,100,50,defaultPaint);
+            canvas.drawLine(50,0,50,100,defaultPaint);
+            defaultPaint.setColor(paintColor);
+            defaultPaint.setStyle(style);
+        }
     }
 
     private void nextFrame(){
@@ -79,7 +94,7 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     protected void update(long delta){
         //работает только если установлен коллбек, вьюхи его ставят сами
         //каждый кадр просим перерисовать себя=)
-        invalidateSelf();
+        //invalidateSelf();
     }
 
     abstract List<Animator> createAnimators();

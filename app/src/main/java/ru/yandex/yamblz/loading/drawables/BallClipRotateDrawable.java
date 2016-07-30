@@ -9,7 +9,7 @@ import android.graphics.Paint;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BallClipRotateDrawable extends DefaultLoadingDrawable{
+public class BallClipRotateDrawable extends DefaultLoadingDrawable {
     private float rotation;
     private float scale;
 
@@ -21,36 +21,28 @@ public class BallClipRotateDrawable extends DefaultLoadingDrawable{
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.translate(50,50);
-        canvas.scale(scale,scale);
+        canvas.translate(50, 50);
+        canvas.scale(scale, scale);
         canvas.rotate(rotation);
-        float circleSpace=10;
-        tempRectF.set(-50+circleSpace,-50+circleSpace,50-circleSpace,50-circleSpace);
-        canvas.drawArc(tempRectF,-45,270,false,defaultPaint);
+        float circleSpace = 10;
+        tempRectF.set(-50 + circleSpace, -50 + circleSpace, 50 - circleSpace, 50 - circleSpace);
+        canvas.drawArc(tempRectF, -45, 270, false, defaultPaint);
     }
 
-    @Override
-    protected void update(long delta) {
-        super.update(delta);
-    }
 
     @Override
     List<Animator> createAnimators() {
-        List<Animator> animators=new ArrayList<>();
-        ValueAnimator rotateAnimator =ValueAnimator.ofFloat(0,360);
+        List<Animator> animators = new ArrayList<>();
+        ValueAnimator rotateAnimator = ValueAnimator.ofFloat(0, 360);
         rotateAnimator.setDuration(750);
         rotateAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        rotateAnimator.addUpdateListener(animation -> {
-          rotation= (float) animation.getAnimatedValue();
-        });
+        rotateAnimator.addUpdateListener(animation -> rotation = (float) animation.getAnimatedValue());
         animators.add(rotateAnimator);
 
-        ValueAnimator scaleAnimator=ValueAnimator.ofFloat(1,0.6f,0.5f,1);
+        ValueAnimator scaleAnimator = ValueAnimator.ofFloat(1, 0.6f, 0.5f, 1);
         scaleAnimator.setDuration(750);
         scaleAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        scaleAnimator.addUpdateListener(animation -> {
-            scale= (float) animation.getAnimatedValue();
-        });
+        scaleAnimator.addUpdateListener(animation -> scale = (float) animation.getAnimatedValue());
         animators.add(scaleAnimator);
         return animators;
     }

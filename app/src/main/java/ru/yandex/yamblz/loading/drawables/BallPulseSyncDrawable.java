@@ -22,11 +22,9 @@ public class BallPulseSyncDrawable extends DefaultLoadingDrawable {
             final int index=i;
             ValueAnimator scaleAnim=ValueAnimator.ofFloat(100/2,100/2-radius*2,100/2);
             scaleAnim.setDuration(600);
-            scaleAnim.setRepeatCount(-1);
+            scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.addUpdateListener(animation -> {
-                translateYFloats[index] = (float) animation.getAnimatedValue();
-            });
+            scaleAnim.addUpdateListener(animation -> translateYFloats[index] = (float) animation.getAnimatedValue());
             animators.add(scaleAnim);
         }
         return animators;
@@ -35,7 +33,7 @@ public class BallPulseSyncDrawable extends DefaultLoadingDrawable {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         float circleSpacing=4;
-        float radius=(100-circleSpacing*2)/6;
+        float radius=(100-circleSpacing*2)/6f;
         float x = 100f/ 2-(radius*2+circleSpacing);
         for (int i = 0; i < 3; i++) {
             canvas.save();

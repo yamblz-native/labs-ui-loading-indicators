@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BallGridBeatDrawable extends DefaultLoadingDrawable {
-    int[] alphas;
+    private int[] alphas;
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        float circleSpacing=4;
-        float radius=(100-circleSpacing*4)/6;
-        float x = 100/ 2-(radius*2+circleSpacing);
-        float y = 100/ 2-(radius*2+circleSpacing);
+        float circleSpacing = 4;
+        float radius = (100 - circleSpacing * 4) / 6f;
+        float x = 100f / 2f - (radius * 2 + circleSpacing);
+        float y = 100f / 2f - (radius * 2 + circleSpacing);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 canvas.save();
-                float translateX=x+(radius*2)*j+circleSpacing*j;
-                float translateY=y+(radius*2)*i+circleSpacing*i;
+                float translateX = x + (radius * 2) * j + circleSpacing * j;
+                float translateY = y + (radius * 2) * i + circleSpacing * i;
                 canvas.translate(translateX, translateY);
                 defaultPaint.setAlpha(alphas[3 * i + j]);
                 canvas.drawCircle(0, 0, radius, defaultPaint);
@@ -30,6 +30,7 @@ public class BallGridBeatDrawable extends DefaultLoadingDrawable {
             }
         }
     }
+
     @Override
     List<Animator> createAnimators() {
         alphas = new int[]{255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
@@ -42,7 +43,7 @@ public class BallGridBeatDrawable extends DefaultLoadingDrawable {
             final int index = i;
             ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 168, 255);
             alphaAnim.setDuration(durations[i]);
-            alphaAnim.setRepeatCount(-1);
+            alphaAnim.setRepeatCount(ValueAnimator.INFINITE);
             alphaAnim.setStartDelay(delays[i]);
             alphaAnim.addUpdateListener(animation -> {
                 alphas[index] = (int) animation.getAnimatedValue();

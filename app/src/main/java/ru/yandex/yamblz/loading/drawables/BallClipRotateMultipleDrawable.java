@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BallClipRotateMultipleDrawable extends DefaultLoadingDrawable {
-    float scale,rotation;
+    float scale, rotation;
 
     public BallClipRotateMultipleDrawable() {
         super();
@@ -19,19 +19,16 @@ public class BallClipRotateMultipleDrawable extends DefaultLoadingDrawable {
 
     @Override
     List<Animator> createAnimators() {
-        List<Animator> animators=new ArrayList<>();
-        ValueAnimator scaleAnim=ValueAnimator.ofFloat(1,0.6f,1);
+        List<Animator> animators = new ArrayList<>();
+        ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.6f, 1);
         scaleAnim.setDuration(1000);
-        scaleAnim.setRepeatCount(-1);
-        scaleAnim.addUpdateListener(animation -> {
-            scale = (float) animation.getAnimatedValue();
-        });
-        ValueAnimator rotateAnim=ValueAnimator.ofFloat(0, 180,360);
+        scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
+        scaleAnim.addUpdateListener(animation -> scale = (float) animation.getAnimatedValue());
+
+        ValueAnimator rotateAnim = ValueAnimator.ofFloat(0, 180, 360);
         rotateAnim.setDuration(1000);
-        rotateAnim.setRepeatCount(-1);
-        rotateAnim.addUpdateListener(animation -> {
-            rotation = (float) animation.getAnimatedValue();
-        });
+        rotateAnim.setRepeatCount(ValueAnimator.INFINITE);
+        rotateAnim.addUpdateListener(animation -> rotation = (float) animation.getAnimatedValue());
         animators.add(scaleAnim);
         animators.add(rotateAnim);
         return animators;
@@ -40,29 +37,27 @@ public class BallClipRotateMultipleDrawable extends DefaultLoadingDrawable {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        float circleSpacing=12;
+        float circleSpacing = 12;
 
-        canvas.save();
         canvas.translate(50, 50);
         canvas.scale(scale, scale);
-        canvas.rotate(rotation);
+        canvas.save();
 
         //draw two big arc
-        drawArc(canvas,circleSpacing,135,90);
-        drawArc(canvas,circleSpacing,-45,90);
-
+        canvas.rotate(rotation);
+        drawArc(canvas, circleSpacing, 135, 90);
+        drawArc(canvas, circleSpacing, -45, 90);
         canvas.restore();
-        canvas.translate(50, 50);
-        canvas.scale(scale, scale);
-        canvas.rotate(-rotation);
-        circleSpacing=circleSpacing*2.2f;
+
         //draw two small arc
-        drawArc(canvas,circleSpacing,225,90);
-        drawArc(canvas,circleSpacing,45,90);
+        canvas.rotate(-rotation);
+        circleSpacing = circleSpacing * 2.2f;
+        drawArc(canvas, circleSpacing, 225, 90);
+        drawArc(canvas, circleSpacing, 45, 90);
     }
 
-    private void drawArc(Canvas canvas,float circleSpacing,float startAngle,float endAngle){
-        tempRectF.set(-50+circleSpacing,-50+circleSpacing,50-circleSpacing,50-circleSpacing);
+    private void drawArc(Canvas canvas, float circleSpacing, float startAngle, float endAngle) {
+        tempRectF.set(-50 + circleSpacing, -50 + circleSpacing, 50 - circleSpacing, 50 - circleSpacing);
         canvas.drawArc(tempRectF, startAngle, endAngle, false, defaultPaint);
     }
 }
