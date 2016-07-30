@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import ru.yandex.yamblz.R;
-import ru.yandex.yamblz.loading.drawables.LineSpinFadeDrawable;
+import ru.yandex.yamblz.loading.drawables.SemiCircleSpineDrawable;
 
 public class ContentFragment extends BaseFragment {
     @NonNull
@@ -24,7 +24,7 @@ public class ContentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ProgressDialog progressDialog1=new ProgressDialog(getContext());
-        progressDialog1.setIndeterminateDrawable(new LineSpinFadeDrawable());
+        progressDialog1.setIndeterminateDrawable(new SemiCircleSpineDrawable());
         progressDialog1.show();
 
     }
