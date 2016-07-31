@@ -10,9 +10,8 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 
 import java.util.List;
 
@@ -22,7 +21,6 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
 
     protected Paint defaultPaint;
     protected RectF tempRectF;
-    private Handler handler;
     private long lastFrame;
     private List<ValueAnimator> animators;
     private boolean drawDebug = false;
@@ -34,7 +32,6 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         defaultPaint.setStrokeWidth(6);
         defaultPaint.setAntiAlias(true);
         tempRectF = new RectF();
-        handler = new Handler(Looper.getMainLooper());
         lastFrame = SystemClock.uptimeMillis();
     }
 
@@ -69,7 +66,7 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     private void askNextFrame() {
         if(status==RUN){
             if(getCallback()!=null){
-                handler.post(this);
+                scheduleSelf(this,0);
             }else{
                 changeStatus(STOPED);
             }
@@ -80,10 +77,12 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         if(this.status==status)return;
         this.status=status;
         if(status==RUN){
+            Log.d("LoadingDrawable","run");
             animators=createAnimators();
             startAnimators();
             askNextFrame();
         }else if(status==STOPED){
+            Log.d("LoadingDrawable","stopped");
             cancelAnimators();
             animators=null;
         }
