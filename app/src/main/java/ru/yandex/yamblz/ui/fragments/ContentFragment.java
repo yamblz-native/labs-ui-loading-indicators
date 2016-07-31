@@ -105,7 +105,7 @@ public class ContentFragment extends BaseFragment {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) getContext().getResources().getDimension(R.dimen.image_width),
                 (int) getContext().getResources().getDimension(R.dimen.image_height));
         int margin= (int) getContext().getResources().getDimension(R.dimen.image_margin);
-        layoutParams.setMargins(margin,margin,0,0);
+        layoutParams.setMargins(0,margin,margin,0);
         ImageView imageView = new ImageView(getContext());
         imageView.setLayoutParams(layoutParams);
         imageView.setImageDrawable(drawable);
