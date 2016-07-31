@@ -15,49 +15,51 @@ import android.os.SystemClock;
 
 import java.util.List;
 
-public abstract class DefaultLoadingDrawable extends Drawable implements Runnable{
+public abstract class DefaultLoadingDrawable extends Drawable implements Runnable {
     protected Paint defaultPaint;
     protected RectF tempRectF;
     private Handler handler;
     private long lastFrame;
     private List<Animator> animators;
-    private boolean drawDebug=true;
-    DefaultLoadingDrawable(){
-        defaultPaint=new Paint();
+    private boolean drawDebug = true;
+
+    DefaultLoadingDrawable() {
+        defaultPaint = new Paint();
         defaultPaint.setColor(Color.BLACK);
         defaultPaint.setStrokeWidth(6);
         defaultPaint.setAntiAlias(true);
-        tempRectF=new RectF();
-        handler=new Handler(Looper.getMainLooper());
-        lastFrame= SystemClock.uptimeMillis();
-        animators=createAnimators();
+        tempRectF = new RectF();
+        handler = new Handler(Looper.getMainLooper());
+        lastFrame = SystemClock.uptimeMillis();
+        animators = createAnimators();
         startAnimators();
     }
+
     @Override
     public void draw(Canvas canvas) {
         //рисуем в оазмерах 100 к 100
-        canvas.scale(canvas.getWidth()/100f,canvas.getHeight()/100f);
-        if(drawDebug)drawDebug(canvas);
+        canvas.scale(canvas.getWidth() / 100f, canvas.getHeight() / 100f);
+        if (drawDebug) drawDebug(canvas);
         nextFrame();
     }
 
-    private void drawDebug(Canvas canvas){
-        if(drawDebug){
-            int paintColor=defaultPaint.getColor();
-            Paint.Style style=defaultPaint.getStyle();
+    private void drawDebug(Canvas canvas) {
+        if (drawDebug) {
+            int paintColor = defaultPaint.getColor();
+            Paint.Style style = defaultPaint.getStyle();
             defaultPaint.setStyle(Paint.Style.FILL);
-            tempRectF.set(0,0,100,100);
+            tempRectF.set(0, 0, 100, 100);
             defaultPaint.setColor(Color.BLUE);
-            canvas.drawRect(tempRectF,defaultPaint);
+            canvas.drawRect(tempRectF, defaultPaint);
             defaultPaint.setColor(Color.RED);
-            canvas.drawLine(0,50,100,50,defaultPaint);
-            canvas.drawLine(50,0,50,100,defaultPaint);
+            canvas.drawLine(0, 50, 100, 50, defaultPaint);
+            canvas.drawLine(50, 0, 50, 100, defaultPaint);
             defaultPaint.setColor(paintColor);
             defaultPaint.setStyle(style);
         }
     }
 
-    private void nextFrame(){
+    private void nextFrame() {
         handler.post(this);
     }
 
@@ -78,20 +80,20 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
 
     @Override
     public void run() {
-        long currentFrame=SystemClock.uptimeMillis();
-        long delta=currentFrame-lastFrame;
-        lastFrame=currentFrame;
+        long currentFrame = SystemClock.uptimeMillis();
+        long delta = currentFrame - lastFrame;
+        lastFrame = currentFrame;
         update(delta);
-       // Log.d("DefaultLoadingDrawable","delta:"+delta);
+        // Log.d("DefaultLoadingDrawable","delta:"+delta);
     }
 
-    private void startAnimators(){
-        for(Animator a:animators){
+    private void startAnimators() {
+        for (Animator a : animators) {
             a.start();
         }
     }
 
-    protected void update(long delta){
+    protected void update(long delta) {
         //работает только если установлен коллбек, вьюхи его ставят сами
         //каждый кадр просим перерисовать себя=)
         //invalidateSelf();

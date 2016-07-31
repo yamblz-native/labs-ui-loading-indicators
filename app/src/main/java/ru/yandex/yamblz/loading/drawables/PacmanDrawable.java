@@ -28,24 +28,15 @@ public class PacmanDrawable extends DefaultLoadingDrawable {
 
         canvas.save();
         canvas.translate(x, y);
-        canvas.rotate(degrees1);
         paint.setAlpha(255);
         tempRectF.set(-x / 1.7f, -y / 1.7f, x / 1.7f, y / 1.7f);
-        canvas.drawArc(tempRectF, 0, 270, true, paint);
-        canvas.restore();
-
-        canvas.save();
-        canvas.translate(x, y);
-        canvas.rotate(degrees2);
-        paint.setAlpha(255);
-        tempRectF.set(-x / 1.7f, -y / 1.7f, x / 1.7f, y / 1.7f);
-        canvas.drawArc(tempRectF, 90, 270, true, paint);
+        canvas.drawArc(tempRectF, degrees1, 360 - degrees1 * 2, true, paint);
         canvas.restore();
     }
 
 
     private void drawCircle(Canvas canvas, Paint paint) {
-        float radius = 100 / 11;
+        float radius = 100f / 11;
         paint.setAlpha(alpha);
         canvas.drawCircle(translateX, 50, radius, paint);
     }

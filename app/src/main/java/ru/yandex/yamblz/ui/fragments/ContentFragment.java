@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.yandex.yamblz.R;
-import ru.yandex.yamblz.loading.drawables.BallZigZagDrawable;
+import ru.yandex.yamblz.loading.drawables.TriangleSkewSpinDrawable;
 
 public class ContentFragment extends BaseFragment {
     @NonNull
@@ -22,7 +22,7 @@ public class ContentFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ProgressDialog progressDialog1 = new ProgressDialog(getContext());
-        progressDialog1.setIndeterminateDrawable(new BallZigZagDrawable());
+        progressDialog1.setIndeterminateDrawable(new TriangleSkewSpinDrawable());
         progressDialog1.show();
     }
 }

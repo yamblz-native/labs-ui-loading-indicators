@@ -8,7 +8,8 @@ import android.graphics.Matrix;
 public abstract class DefaultLoadingDrawableWithCamera extends DefaultLoadingDrawable {
     private Camera camera;
     private Matrix matrix;
-    float rotateX,rotateY,rotateZ;
+    float rotateX, rotateY, rotateZ;
+
     public DefaultLoadingDrawableWithCamera() {
         camera = new Camera();
         matrix = new Matrix();
@@ -18,7 +19,7 @@ public abstract class DefaultLoadingDrawableWithCamera extends DefaultLoadingDra
     public void draw(Canvas canvas) {
         super.draw(canvas);
         camera.save();
-        camera.rotate(rotateX,rotateY,rotateZ);
+        camera.rotate(rotateX, rotateY, rotateZ);
         camera.getMatrix(matrix);
         camera.restore();
         matrix.preTranslate(-50, -50);
