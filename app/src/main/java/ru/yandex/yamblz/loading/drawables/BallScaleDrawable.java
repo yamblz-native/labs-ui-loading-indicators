@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.view.animation.LinearInterpolator;
@@ -24,8 +23,8 @@ public class BallScaleDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator scaleAnim = ValueAnimator.ofFloat(0, 1);
         scaleAnim.setInterpolator(new LinearInterpolator());
         scaleAnim.setDuration(1000);

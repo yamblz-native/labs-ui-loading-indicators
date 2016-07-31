@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.view.animation.LinearInterpolator;
@@ -14,10 +13,10 @@ public class CubeTransitionDrawable extends DefaultLoadingDrawable {
     float degrees, scaleFloat = 1.0f;
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         translateX = new float[2];
         translateY = new float[2];
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         float startX = 20;
         float startY = 20;
         for (int i = 0; i < 2; i++) {

@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Path;
@@ -29,8 +28,8 @@ public class TriangleSkewSpinDrawable extends DefaultLoadingDrawableWithCamera {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator rotationX = ValueAnimator.ofFloat(0, 180, 180, 0, 0);
         rotationX.setInterpolator(new LinearInterpolator());
         rotationX.setRepeatCount(ValueAnimator.INFINITE);

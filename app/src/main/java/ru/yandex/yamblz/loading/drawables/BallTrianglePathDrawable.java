@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -30,8 +29,8 @@ public class BallTrianglePathDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         float startX = 20;
         float startY = 20;
         translateX = new float[3];

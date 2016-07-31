@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.view.animation.LinearInterpolator;
@@ -25,8 +24,8 @@ public class BallZigZagDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         translateX = new float[2];
         translateY = new float[2];
         float startX = 100 / 6;

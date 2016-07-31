@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -12,9 +11,9 @@ public class BallPulseSyncDrawable extends DefaultLoadingDrawable {
     float[] translateYFloats;
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         translateYFloats = new float[3];
-        List<Animator> animators=new ArrayList<>();
+        List<ValueAnimator> animators=new ArrayList<>();
         float circleSpacing=4;
         float radius=(100-circleSpacing*2)/6;
         int[] delays=new int[]{70,140,210};

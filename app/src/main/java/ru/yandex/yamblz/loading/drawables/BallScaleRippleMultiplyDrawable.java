@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Paint;
 import android.view.animation.LinearInterpolator;
@@ -16,10 +15,10 @@ public class BallScaleRippleMultiplyDrawable extends BallScaleMultiplyDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         scaleFloats = new float[]{1, 1, 1};
         alphaInts = new int[]{255, 255, 255};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         long[] delays = new long[]{0, 200, 400};
         for (int i = 0; i < 3; i++) {
             final int index = i;

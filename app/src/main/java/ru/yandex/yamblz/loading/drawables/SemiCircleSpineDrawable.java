@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -12,8 +11,8 @@ public class SemiCircleSpineDrawable extends DefaultLoadingDrawable {
     float rotation;
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator rotateAnim = ValueAnimator.ofFloat(0, 180, 360);
         rotateAnim.setDuration(600);
         rotateAnim.setRepeatCount(-1);

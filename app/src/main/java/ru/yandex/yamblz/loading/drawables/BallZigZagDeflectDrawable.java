@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.view.animation.LinearInterpolator;
 
@@ -10,10 +9,10 @@ import java.util.List;
 
 public class BallZigZagDeflectDrawable extends BallZigZagDrawable {
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         translateX = new float[2];
         translateY = new float[2];
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         float startX = 100f / 6;
         float startY = 100f / 6;
         for (int i = 0; i < 2; i++) {

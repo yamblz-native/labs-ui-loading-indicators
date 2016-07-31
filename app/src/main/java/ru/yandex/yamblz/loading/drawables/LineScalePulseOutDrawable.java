@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 
 import java.util.ArrayList;
@@ -9,9 +8,9 @@ import java.util.List;
 
 public class LineScalePulseOutDrawable extends LineScaleDrawable {
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         scaleYFloats = new float[]{1f, 1f, 1f, 1f, 1f};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         long[] delays = new long[]{500, 250, 0, 250, 500};
         for (int i = 0; i < 5; i++) {
             final int index = i;

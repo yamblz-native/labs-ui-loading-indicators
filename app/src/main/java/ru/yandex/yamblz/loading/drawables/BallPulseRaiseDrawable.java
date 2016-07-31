@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.view.animation.LinearInterpolator;
@@ -27,8 +26,8 @@ public class BallPulseRaiseDrawable extends DefaultLoadingDrawableWithCamera {
     }
 
     @Override
-    public List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    public List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 360);
         valueAnimator.addUpdateListener(animation -> {
             rotateX = (float) animation.getAnimatedValue();

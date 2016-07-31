@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -18,8 +17,8 @@ public class BallClipRotateMultipleDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.6f, 1);
         scaleAnim.setDuration(1000);
         scaleAnim.setRepeatCount(ValueAnimator.INFINITE);

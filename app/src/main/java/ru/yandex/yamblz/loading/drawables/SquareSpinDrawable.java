@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.view.animation.LinearInterpolator;
@@ -20,8 +19,8 @@ public class SquareSpinDrawable extends DefaultLoadingDrawableWithCamera {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 180, 180, 0, 0);
         valueAnimator.setInterpolator(new LinearInterpolator());
         valueAnimator.setDuration(2500);

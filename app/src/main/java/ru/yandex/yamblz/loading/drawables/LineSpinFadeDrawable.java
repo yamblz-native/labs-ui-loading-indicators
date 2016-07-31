@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -47,10 +46,10 @@ public class LineSpinFadeDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         scaleFloats = new float[]{1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f};
         alphas = new int[]{255, 255, 255, 255, 255, 255, 255, 255};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         int[] delays = {0, 120, 240, 360, 480, 600, 720, 780, 840};
         for (int i = 0; i < 8; i++) {
             final int index = i;

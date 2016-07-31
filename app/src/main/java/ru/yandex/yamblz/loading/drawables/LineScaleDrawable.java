@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -27,9 +26,9 @@ public class LineScaleDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         scaleYFloats = new float[]{1f, 1f, 1f, 1f, 1f};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         long[] delays = new long[]{100, 200, 300, 400, 500};
         for (int i = 0; i < 5; i++) {
             final int index = i;

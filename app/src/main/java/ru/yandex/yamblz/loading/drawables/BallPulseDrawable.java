@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -28,8 +27,8 @@ public class BallPulseDrawable extends DefaultLoadingDrawable {
 
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         int[] delays = new int[]{120, 240, 360};
         for (int i = 0; i < 3; i++) {
             int index = i;

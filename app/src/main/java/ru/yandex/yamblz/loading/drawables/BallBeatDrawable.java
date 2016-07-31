@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -31,10 +30,10 @@ public class BallBeatDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         scaleFloats = new float[]{1f, 1f, 1f};
         alphas = new int[]{255, 255, 255};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
         int[] delays = new int[]{350, 0, 350};
         for (int i = 0; i < 3; i++) {
             final int index = i;
@@ -42,7 +41,10 @@ public class BallBeatDrawable extends DefaultLoadingDrawable {
             scaleAnim.setDuration(700);
             scaleAnim.setRepeatCount(ValueAnimator.INFINITE);
             scaleAnim.setStartDelay(delays[i]);
-            scaleAnim.addUpdateListener(animation -> scaleFloats[index] = (float) animation.getAnimatedValue());
+            scaleAnim.addUpdateListener(animation -> {
+                scaleFloats[index] = (float) animation.getAnimatedValue();
+
+            });
 
             ValueAnimator alphaAnim = ValueAnimator.ofInt(255, 51, 255);
             alphaAnim.setDuration(700);
@@ -50,6 +52,8 @@ public class BallBeatDrawable extends DefaultLoadingDrawable {
             alphaAnim.setStartDelay(delays[i]);
             alphaAnim.addUpdateListener(animation -> alphas[index] = (int) animation.getAnimatedValue());
 
+            scaleAnim.start();
+            alphaAnim.start();
             animators.add(scaleAnim);
             animators.add(alphaAnim);
         }

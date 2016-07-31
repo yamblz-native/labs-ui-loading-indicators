@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -34,8 +33,8 @@ public class BallGridPulseDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
-        List<Animator> animators = new ArrayList<>();
+    protected List<ValueAnimator> createAnimators() {
+        List<ValueAnimator> animators = new ArrayList<>();
         int[] durations = {720, 1020, 1280, 1420, 1450, 1180, 870, 1450, 1060};
         int[] delays = {-60, 250, -170, 480, 310, 30, 460, 780, 450};
 

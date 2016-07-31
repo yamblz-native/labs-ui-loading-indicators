@@ -1,7 +1,6 @@
 package ru.yandex.yamblz.loading.drawables;
 
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 
@@ -32,9 +31,9 @@ public class BallGridBeatDrawable extends DefaultLoadingDrawable {
     }
 
     @Override
-    List<Animator> createAnimators() {
+    protected List<ValueAnimator> createAnimators() {
         alphas = new int[]{255, 255, 255, 255, 255, 255, 255, 255, 255, 255};
-        List<Animator> animators = new ArrayList<>();
+        List<ValueAnimator> animators = new ArrayList<>();
 
         int[] durations = {960, 930, 1190, 1130, 1340, 940, 1200, 820, 1190};
         int[] delays = {360, 400, 680, 410, 710, -150, -120, 10, 320};

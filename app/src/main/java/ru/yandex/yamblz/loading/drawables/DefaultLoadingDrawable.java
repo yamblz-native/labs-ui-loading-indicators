@@ -2,6 +2,7 @@ package ru.yandex.yamblz.loading.drawables;
 
 
 import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -16,12 +17,16 @@ import android.os.SystemClock;
 import java.util.List;
 
 public abstract class DefaultLoadingDrawable extends Drawable implements Runnable {
+    private static final int STOPED=1;
+    private static final int RUN=2;
+
     protected Paint defaultPaint;
     protected RectF tempRectF;
     private Handler handler;
     private long lastFrame;
-    private List<Animator> animators;
+    private List<ValueAnimator> animators;
     private boolean drawDebug = false;
+    private int status=STOPED;
 
     DefaultLoadingDrawable() {
         defaultPaint = new Paint();
@@ -31,16 +36,18 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         tempRectF = new RectF();
         handler = new Handler(Looper.getMainLooper());
         lastFrame = SystemClock.uptimeMillis();
-        animators = createAnimators();
-        startAnimators();
     }
+
+    protected abstract List<ValueAnimator> createAnimators();
 
     @Override
     public void draw(Canvas canvas) {
+        if(status==STOPED){
+            changeStatus(RUN);
+        }
         //рисуем в оазмерах 100 к 100
         canvas.scale(canvas.getWidth() / 100f, canvas.getHeight() / 100f);
         if (drawDebug) drawDebug(canvas);
-        nextFrame();
     }
 
     private void drawDebug(Canvas canvas) {
@@ -59,10 +66,28 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         }
     }
 
-    private void nextFrame() {
-        handler.post(this);
+    private void askNextFrame() {
+        if(status==RUN){
+            if(getCallback()!=null){
+                handler.post(this);
+            }else{
+                changeStatus(STOPED);
+            }
+        }
     }
 
+    protected void changeStatus(int status){
+        if(this.status==status)return;
+        this.status=status;
+        if(status==RUN){
+            animators=createAnimators();
+            startAnimators();
+            askNextFrame();
+        }else if(status==STOPED){
+            cancelAnimators();
+            animators=null;
+        }
+    }
     @Override
     public void setAlpha(int alpha) {
 
@@ -83,7 +108,9 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         long currentFrame = SystemClock.uptimeMillis();
         long delta = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        invalidateSelf();
         update(delta);
+        askNextFrame();
         // Log.d("DefaultLoadingDrawable","delta:"+delta);
     }
 
@@ -92,14 +119,16 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
             a.start();
         }
     }
-
-    protected void update(long delta) {
-        //работает только если установлен коллбек, вьюхи его ставят сами
-        //каждый кадр просим перерисовать себя=)
-        invalidateSelf();
+    private void cancelAnimators() {
+        for (ValueAnimator a : animators) {
+            a.cancel();
+            a.removeAllListeners();
+            a.removeAllUpdateListeners();
+        }
     }
 
-    abstract List<Animator> createAnimators();
+    protected void update(long delta) {
+    }
 
     public void setColor(int color){
         defaultPaint.setColor(color);
