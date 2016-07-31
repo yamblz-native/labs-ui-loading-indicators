@@ -21,7 +21,7 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     private Handler handler;
     private long lastFrame;
     private List<Animator> animators;
-    private boolean drawDebug = true;
+    private boolean drawDebug = false;
 
     DefaultLoadingDrawable() {
         defaultPaint = new Paint();
@@ -96,18 +96,13 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
     protected void update(long delta) {
         //работает только если установлен коллбек, вьюхи его ставят сами
         //каждый кадр просим перерисовать себя=)
-        //invalidateSelf();
+        invalidateSelf();
     }
 
     abstract List<Animator> createAnimators();
 
-    @Override
-    public int getIntrinsicWidth() {
-        return 1;
+    public void setColor(int color){
+        defaultPaint.setColor(color);
     }
 
-    @Override
-    public int getIntrinsicHeight() {
-        return 1;
-    }
 }
