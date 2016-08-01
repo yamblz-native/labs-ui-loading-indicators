@@ -1,17 +1,11 @@
 package ru.yandex.yamblz.ui.views;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.x;
 
 /**
  * Created by vorona on 02.08.16.
@@ -67,45 +61,39 @@ public class IndicatorBalls1 extends BaseProgressIndicator {
 
 
     @Override
-    public List<Animator> createAnimation() {
-        List<Animator> animators = new ArrayList<>();
+    public void createAnimation() {
         for (int i = 0; i < 3; i++) {
-            ValueAnimator scaleAnim = ValueAnimator.ofFloat(1, 0.75f, 1);
-            scaleAnim.setDuration(600);
-            scaleAnim.setRepeatCount(-1);
-            if (i == 1)
-                scaleAnim.setStartDelay(0);
-            else
-                scaleAnim.setStartDelay(300);
+            ValueAnimator scale = ValueAnimator.ofFloat(1, 0.75f, 1);
+            scale.setDuration(600);
+            scale.setRepeatMode(ValueAnimator.RESTART);
+            scale.setRepeatCount(ValueAnimator.INFINITE);
+            if (i == 0 || i == 2)
+                scale.setStartDelay(300);
             int finalI = i;
-            scaleAnim.addUpdateListener(animation -> {
+            scale.addUpdateListener(animation -> {
                 if (finalI == 1)
                     scaleCentre = (float) animation.getAnimatedValue();
                 else
                     scaleBorder = (float) animation.getAnimatedValue();
                 postInvalidate();
             });
-            scaleAnim.start();
+            scale.start();
 
-            ValueAnimator alphaAnim = ValueAnimator.ofInt(200, 45, 200);
-            alphaAnim.setDuration(600);
-            alphaAnim.setRepeatCount(-1);
-            if (i == 1)
-                alphaAnim.setStartDelay(0);
-            else
-                alphaAnim.setStartDelay(300);
-            alphaAnim.addUpdateListener(animation -> {
+            ValueAnimator alpha = ValueAnimator.ofInt(200, 45, 200);
+            alpha.setDuration(600);
+            alpha.setRepeatMode(ValueAnimator.RESTART);
+            alpha.setRepeatCount(ValueAnimator.INFINITE);
+            if (i == 0 || i == 2)
+                scale.setStartDelay(300);
+            alpha.addUpdateListener(animation -> {
                 if (finalI == 1)
                     alphaCentre = (int) animation.getAnimatedValue();
                 else
                     alphaBorder = (int) animation.getAnimatedValue();
                 postInvalidate();
             });
-            alphaAnim.start();
-            animators.add(scaleAnim);
-            animators.add(alphaAnim);
+            alpha.start();
         }
-        return animators;
     }
 
 }

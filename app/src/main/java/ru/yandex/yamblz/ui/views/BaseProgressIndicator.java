@@ -16,8 +16,6 @@ import java.util.List;
 
 public abstract class BaseProgressIndicator extends View {
 
-    private List<Animator> mAnimators;
-
     public BaseProgressIndicator(Context context) {
         super(context);
     }
@@ -30,10 +28,10 @@ public abstract class BaseProgressIndicator extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public abstract List<Animator> createAnimation();
+    public abstract void createAnimation();
 
     public void initAnimation(){
-        mAnimators = createAnimation();
+        createAnimation();
     }
 
     @Override
