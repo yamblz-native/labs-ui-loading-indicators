@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
@@ -42,9 +43,19 @@ public abstract class DefaultLoadingDrawable extends Drawable implements Runnabl
         if(status==STOPED){
             changeStatus(RUN);
         }
-        //рисуем в оазмерах 100 к 100
-        canvas.scale(canvas.getWidth() / 100f, canvas.getHeight() / 100f);
+        Rect bounds=getBounds();
+        if(bounds.width()!=bounds.height()){
+            float min=Math.min(bounds.width(),bounds.height());
+            float translateX=canvas.getWidth()-min;
+            float translateY=canvas.getHeight()-min;
+            canvas.translate(translateX/2f,translateY/2f);
+            canvas.scale(min/100f,min/100f);
+        }else{
+            //рисуем в оазмерах 100 к 100
+            canvas.scale(canvas.getWidth() / 100f, canvas.getHeight() / 100f);
+        }
         if (drawDebug) drawDebug(canvas);
+
     }
 
     private void drawDebug(Canvas canvas) {
