@@ -12,7 +12,7 @@ import java.util.List;
 public class PacmanDrawable extends DefaultLoadingDrawable {
     private float translateX;
     private int alpha;
-    private float degrees1, degrees2;
+    private float degrees1;
 
     @Override
     public void draw(Canvas canvas) {
@@ -66,17 +66,10 @@ public class PacmanDrawable extends DefaultLoadingDrawable {
             degrees1 = (float) animation.getAnimatedValue();
         });
 
-        ValueAnimator rotateAnim2 = ValueAnimator.ofFloat(0, -45, 0);
-        rotateAnim2.setDuration(650);
-        rotateAnim2.setRepeatCount(-1);
-        rotateAnim2.addUpdateListener(animation -> {
-            degrees2 = (float) animation.getAnimatedValue();
-        });
 
         animators.add(translationAnim);
         animators.add(alphaAnim);
         animators.add(rotateAnim1);
-        animators.add(rotateAnim2);
         return animators;
     }
 }
