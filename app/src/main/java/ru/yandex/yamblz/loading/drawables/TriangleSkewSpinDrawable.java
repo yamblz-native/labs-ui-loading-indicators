@@ -20,6 +20,7 @@ public class TriangleSkewSpinDrawable extends DefaultLoadingDrawableWithCamera {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        path.reset();
         path.moveTo(20, 80);
         path.lineTo(80, 80);
         path.lineTo(50, 20);
