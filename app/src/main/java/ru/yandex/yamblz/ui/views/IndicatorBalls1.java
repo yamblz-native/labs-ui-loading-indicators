@@ -84,7 +84,7 @@ public class IndicatorBalls1 extends BaseProgressIndicator {
             alpha.setRepeatMode(ValueAnimator.RESTART);
             alpha.setRepeatCount(ValueAnimator.INFINITE);
             if (i == 0 || i == 2)
-                scale.setStartDelay(300);
+                alpha.setStartDelay(300);
             alpha.addUpdateListener(animation -> {
                 if (finalI == 1)
                     alphaCentre = (int) animation.getAnimatedValue();
