@@ -14,8 +14,7 @@ import android.util.AttributeSet;
 
 public class IndicatorBalls3 extends BaseProgressIndicator {
 
-    private int transition[] = new int[3];
-    private int radius;
+    private float scale[] = new float[3];
     private Paint paint;
 
     public IndicatorBalls3(Context context) {
@@ -42,16 +41,17 @@ public class IndicatorBalls3 extends BaseProgressIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float rad = (getWidth() - 16) / 6;
-        radius = (int) rad;
         float x = getWidth() / 2 - (rad * 2 + 8);
-        drawCircle(canvas, rad, x, radius + transition[0]);
-        drawCircle(canvas, rad, x + (rad * 2), radius + transition[1]);
-        drawCircle(canvas, rad, x + (rad * 2) * 2, radius + transition[2]);
+        float y = getHeight() / 2;
+        drawCircle(canvas, rad, x, y, scale[0]);
+        drawCircle(canvas, rad, x + (rad * 2 + 8), y, scale[1]);
+        drawCircle(canvas, rad, x + (rad * 2 + 8) * 2, y, scale[2]);
     }
 
-    private void drawCircle(Canvas canvas, float radius, float x, float y) {
+    private void drawCircle(Canvas canvas, float radius, float x, float y, float scale) {
         canvas.save();
         canvas.translate(x, y);
+        canvas.scale(scale, scale);
         canvas.drawCircle(0, 0, radius, paint);
         canvas.restore();
     }
@@ -60,14 +60,14 @@ public class IndicatorBalls3 extends BaseProgressIndicator {
     @Override
     public void createAnimation() {
         for (int i = 0; i < 3; i++) {
-            ValueAnimator transition = ValueAnimator.ofInt(100, 0, 100);
-            transition.setDuration(800);
-            transition.setRepeatMode(ValueAnimator.RESTART);
+            ValueAnimator transition = ValueAnimator.ofFloat(1f, 0.25f);
+            transition.setDuration(600);
+            transition.setRepeatMode(ValueAnimator.REVERSE);
             transition.setRepeatCount(ValueAnimator.INFINITE);
-            transition.setStartDelay(i*200);
+            transition.setStartDelay(i*100);
             int finalI = i;
             transition.addUpdateListener(animation -> {
-                this.transition[finalI] = (int) animation.getAnimatedValue();
+                scale[finalI] = (float) animation.getAnimatedValue();
                 postInvalidate();
             });
             transition.start();

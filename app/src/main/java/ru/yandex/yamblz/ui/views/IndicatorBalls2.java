@@ -15,7 +15,6 @@ import android.util.AttributeSet;
 public class IndicatorBalls2 extends BaseProgressIndicator {
 
     private int transition[] = new int[3];
-    private int radius;
     private Paint paint;
 
     public IndicatorBalls2(Context context) {
@@ -42,11 +41,11 @@ public class IndicatorBalls2 extends BaseProgressIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         float rad = (getWidth() - 16) / 6;
-        radius = (int) rad;
         float x = getWidth() / 2 - (rad * 2 + 8);
-        drawCircle(canvas, rad, x, radius + transition[0]);
-        drawCircle(canvas, rad, x + (rad * 2), radius + transition[1]);
-        drawCircle(canvas, rad, x + (rad * 2) * 2, radius + transition[2]);
+        float y = getHeight() / 2;
+        drawCircle(canvas, rad, x, rad + transition[0]);
+        drawCircle(canvas, rad, x + (rad * 2 + 8), rad + transition[1]);
+        drawCircle(canvas, rad, x + (rad * 2 + 8) * 2, rad + transition[2]);
     }
 
     private void drawCircle(Canvas canvas, float radius, float x, float y) {
