@@ -49,4 +49,36 @@
         android:layout_alignStart="@+id/ind3"
         android:layout_marginTop="14dp" />
 
+    <ru.yandex.yamblz.ui.views.IndicatorCircle1
+        android:id="@+id/ind7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/ind5"/>
+
+    <ru.yandex.yamblz.ui.views.IndicatorCircle2
+        android:id="@+id/ind8"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@+id/ind7"
+        android:layout_alignLeft="@+id/ind4"
+        android:layout_alignStart="@+id/ind4" />
+
+    <ru.yandex.yamblz.ui.views.IndicatorCircle3
+        android:id="@+id/ind9"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignTop="@+id/ind8"
+        android:layout_alignLeft="@+id/ind6"
+        android:layout_alignStart="@+id/ind6" />
+
+    <ru.yandex.yamblz.ui.views.IndicatorTriangle1
+        android:id="@+id/ind10"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/ind7"
+        android:layout_alignLeft="@+id/ind8"
+        android:layout_alignStart="@+id/ind8" />
+
+
 </RelativeLayout>
