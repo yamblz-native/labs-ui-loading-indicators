@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/content"
-        android:textSize="42sp"
-        android:gravity="center"
-        />
+    <ru.yandex.yamblz.indicators.CirclesForwardView
+        android:id="@+id/circles_forward"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        custom:circleColor="@android:color/holo_green_dark"/>
 
 </FrameLayout>
