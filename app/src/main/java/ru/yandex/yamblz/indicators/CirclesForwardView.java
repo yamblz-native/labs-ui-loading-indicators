@@ -31,6 +31,7 @@ public class CirclesForwardView extends View {
     private float mRadius;
     private long mDiagTime, mSideTime;
     private float mXup, mYup, mXdown, mYdown;
+    private float mRotate;
     private int mWidth, mHeight;
 
     public CirclesForwardView(Context context) {
