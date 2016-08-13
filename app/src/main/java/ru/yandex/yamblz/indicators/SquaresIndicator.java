@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
@@ -29,7 +28,7 @@ public class SquaresIndicator extends View {
     private Paint mPaint;
     private int mWidth, mHeight;
     private boolean mRunning;
-    private float mSquareSmall, mSquareBig;
+    private float mSquareSmall, mSquareBig, mSquareDiag;
     private float mScaled, mRotate;
     private long mVertDuration, mHorDuration;
     private float mX1, mY1, mX2, mY2;
@@ -63,11 +62,11 @@ public class SquaresIndicator extends View {
             canvas.save();
             canvas.translate(mX1, mY1);
             canvas.rotate(mRotate);
-            canvas.drawRect(0, 0, mScaled, mScaled, mPaint);
+            canvas.drawRect(-mScaled / 2, -mScaled / 2, mScaled / 2, mScaled / 2, mPaint);
             canvas.restore();
             canvas.translate(mX2, mY2);
             canvas.rotate(mRotate);
-            canvas.drawRect(0, 0, mScaled, mScaled, mPaint);
+            canvas.drawRect(-mScaled / 2, -mScaled / 2, mScaled / 2, mScaled / 2, mPaint);
         }
     }
 
@@ -85,17 +84,15 @@ public class SquaresIndicator extends View {
     private void initValues() {
         mSquareBig = SQUARE_BIG * mWidth;
         mSquareSmall = SQUARE_SMALL * mHeight;
-        Log.e("TAG", mSquareSmall + "  " + mSquareBig);
+        mSquareDiag = (float)Math.sqrt(2) * mSquareBig;
 
-        final float vertSide = mHeight - mSquareBig;
-        final float horSide = mWidth - mSquareBig;
+        final float vertSide = mHeight - mSquareDiag;
+        final float horSide = mWidth - mSquareDiag;
 
         final float total = vertSide * 2 + horSide * 2;
 
         mVertDuration = (long)(vertSide / total * DEFAULT_DURATION);
         mHorDuration = (long)(horSide / total * DEFAULT_DURATION);
-
-        Log.e("TAG", "TIME " + mVertDuration + " " + mHorDuration);
 
     }
 
@@ -108,7 +105,6 @@ public class SquaresIndicator extends View {
         AnimatorSet animatorY = new AnimatorSet();
         animatorX.playSequentially((List<Animator>)createXAnimations());
         animatorY.playSequentially((List<Animator>)createYAnimations());
-
         mAnimator.playTogether(animatorX, animatorY, createScaleAnimator(), createRotateAnimator());
 
         mAnimator.addListener(new AnimatorListenerAdapter() {
@@ -122,11 +118,11 @@ public class SquaresIndicator extends View {
     }
 
     private List<? extends Animator> createXAnimations() {
-        List<ValueAnimator> animators = new ArrayList<>();
-        animators.add(ValueAnimator.ofFloat(0, mWidth - mSquareBig).setDuration(mHorDuration));
-        animators.add(ValueAnimator.ofFloat(mWidth - mSquareBig, mWidth - mSquareBig).setDuration(mVertDuration));
-        animators.add(ValueAnimator.ofFloat(mWidth - mSquareBig, 0).setDuration(mHorDuration));
-        animators.add(ValueAnimator.ofFloat(0, 0).setDuration(mVertDuration));
+        List<ValueAnimator> animators = new ArrayList<>();;
+        animators.add(ValueAnimator.ofFloat(mSquareDiag / 2, mWidth - mSquareDiag / 2).setDuration(mHorDuration));
+        animators.add(ValueAnimator.ofFloat(mWidth - mSquareDiag / 2, mWidth - mSquareDiag / 2).setDuration(mVertDuration));
+        animators.add(ValueAnimator.ofFloat(mWidth - mSquareDiag / 2, mSquareDiag / 2).setDuration(mHorDuration));
+        animators.add(ValueAnimator.ofFloat(mSquareDiag / 2, mSquareDiag / 2).setDuration(mVertDuration));
         for(ValueAnimator valueAnimator : animators) {
             valueAnimator.addUpdateListener(updateListenerX);
             valueAnimator.setInterpolator(sDefaultInterpolator);
@@ -137,10 +133,10 @@ public class SquaresIndicator extends View {
 
     private List<? extends Animator> createYAnimations() {
         List<ValueAnimator> animators = new ArrayList<>();
-        animators.add(ValueAnimator.ofFloat(0, 0).setDuration(mHorDuration));
-        animators.add(ValueAnimator.ofFloat(0,mHeight - mSquareBig).setDuration(mVertDuration));
-        animators.add(ValueAnimator.ofFloat(mHeight - mSquareBig, mHeight - mSquareBig).setDuration(mHorDuration));
-        animators.add(ValueAnimator.ofFloat(mHeight - mSquareBig, 0).setDuration(mVertDuration));
+        animators.add(ValueAnimator.ofFloat(mSquareDiag / 2, mSquareDiag / 2).setDuration(mHorDuration));
+        animators.add(ValueAnimator.ofFloat(mSquareDiag / 2, mHeight - mSquareDiag / 2).setDuration(mVertDuration));
+        animators.add(ValueAnimator.ofFloat(mHeight - mSquareDiag / 2, mHeight - mSquareDiag / 2).setDuration(mHorDuration));
+        animators.add(ValueAnimator.ofFloat(mHeight - mSquareDiag / 2, mSquareDiag / 2).setDuration(mVertDuration));
         for(ValueAnimator valueAnimator : animators) {
             valueAnimator.addUpdateListener(updateListenerY);
             valueAnimator.setInterpolator(sDefaultInterpolator);
@@ -155,7 +151,6 @@ public class SquaresIndicator extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mScaled = (float)animation.getAnimatedValue();
-                Log.e("TAG", "SCALE " + mScaled);
             }
         });
         scaleAnimator.setInterpolator(sDefaultInterpolator);
@@ -171,7 +166,6 @@ public class SquaresIndicator extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mRotate = (float)animation.getAnimatedValue();
-                Log.e("TAG", "ROTATE " + mRotate);
             }
         });
         rotateAnimator.setInterpolator(sDefaultInterpolator);
@@ -185,7 +179,7 @@ public class SquaresIndicator extends View {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             mX1 = (float)animation.getAnimatedValue();
-            mX2 = mWidth - mX1 - mSquareBig;
+            mX2 = mWidth - mX1;
             invalidate();
         }
     };
@@ -194,7 +188,7 @@ public class SquaresIndicator extends View {
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
             mY1 = (float)animation.getAnimatedValue();
-            mY2 = mHeight - mY1 - mSquareBig;
+            mY2 = mHeight - mY1;
         }
     };
 }
